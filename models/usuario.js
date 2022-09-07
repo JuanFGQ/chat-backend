@@ -44,7 +44,7 @@ remuevo los elementos que no necesito o no quiero mostrar de la peticion
 //*80
 UsuarioSchema.method('toJSON',function(){
     const{__v, _id, password, ...object } = this.toObject();
-    object.uid = _id; 
+    object.uid = _id; 00
     return object;
 })
 

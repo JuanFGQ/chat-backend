@@ -6,7 +6,7 @@ path : api/login
 */
 
 
-const { Router } = require('express');
+const { Router, response } = require('express');
 const { check } = require('express-validator');
 const { crearUsuario,login,renewToken } = require('../controllers/auth');
 const { validarCmapos } = require('../middlewares/validar-campos');
@@ -26,7 +26,21 @@ delete
 
 /* The above code is a middleware function that is used to validate the fields of the form. */
 
-router.post('/new',[
+
+
+// *estas lineas de codigo son las que se utilizan para ir probando el 
+// *funcionamiento de cada cosa que voy creando 
+// router.post('/new', (req,res= response) =>{
+
+//     res.json({
+//         ok:true,
+//         msg:'crear usuario'
+//     })
+// })
+
+
+
+ router.post('/new',[
      //check es un middleware que examina campo por campo 
 
     /*

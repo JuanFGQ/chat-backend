@@ -1,5 +1,7 @@
 
 
+
+//  creacion del JWT
 const jwt = require('jsonwebtoken');
 
 
@@ -33,7 +35,24 @@ const generarJWT = (uid) => {
 
 
 
+}
+//*108
+const comprobarJWT = (token = '') =>{
+
+    
+    try {
+
+        const {uid} = jwt.verify(token, process.env.JWT_KEY);
+        // si se conceta como primer argumento mando un true y el uid del usuario 
+        return[true,uid];
+        
+        
+    } catch (error) {
+   return[false,null];
+        
+    }
 
 }
 
-module.exports = {generarJWT}
+
+module.exports = {generarJWT,comprobarJWT}

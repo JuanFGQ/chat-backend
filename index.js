@@ -45,8 +45,14 @@ require('./sockets/socket');
     app.use(express.static(publicPath));
 
 
+
+    // rutas que coloco en postman que me muestran los resultados 
     // *****************************************************
     app.use('/api/login', require('./routes/auth'));//*76
+    app.use('/api/usuarios', require('./routes/usuarios'));//*110
+    app.use('/api/mensajes', require('./routes/mensajes'));//*118
+
+
     // *****************************************************
 
 

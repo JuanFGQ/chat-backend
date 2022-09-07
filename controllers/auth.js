@@ -4,9 +4,16 @@ const bcrypt = require('bcryptjs');
 const Usuario = require('../models/usuario'); //*79
 const { generarJWT } = require("../helpers/jwt");
 
-
+// *********************************************************
+                          // *CREAR USUARIO
 
 const crearUsuario =  async (req,res = response) => {
+
+
+    // res.json({
+    //     ok:true,
+    //     msg:'Crear Usuario'
+    // })
 
 /* Destructuring the `req.body` object. */
 
@@ -47,6 +54,8 @@ usuario.password = bcrypt.hashSync(password,salt);
 
  const token = await generarJWT(usuario.id);
 
+
+//  *esto es lo que veo en postman
   res.json({
       ok: true,
       usuario,
@@ -64,7 +73,8 @@ usuario.password = bcrypt.hashSync(password,salt);
     }
 }
 
-
+// *********************************************************
+                    // *CREAR LOGIN
 
 // *83
 
@@ -75,8 +85,11 @@ const login = async(req,res = response)=> {
 
 try {
 
+/* Finding the user in the database by the email. */
     const usuarioDB = await Usuario.findOne({email});
 
+  /* Checking to see if the user exists in the database. If the user does not exist, it returns a 404
+  error. */
     if(!usuarioDB){
         return res.status(404).json({
             ok: false,
@@ -86,7 +99,11 @@ try {
 
         // validar password
 
+/* Comparing the password that the user entered with the password that is stored in the database. */
     const validPassword = bcrypt.compareSync(password,usuarioDB.password);
+     
+    
+    /* Checking to see if the password is valid. If it is not valid, it returns a 400 error. */
         if(!validPassword){
             return res.status(400).json({
                 ok: false,
@@ -116,9 +133,17 @@ try {
     })
   }
 }
+// *********************************************************
+                        // *RENOVAR TOKEN
 
 // nuevo controlador para verificar JWT 
 
+/**
+ * The function renewToken is an async function that takes in a request and a response and returns a
+ * new token and the user's information.
+ * @param req - request
+ * @param [res] - response
+ */
 const renewToken = async (req,res = response) => { //*84
 
     // solicitar uid del usuario 
@@ -133,13 +158,15 @@ const renewToken = async (req,res = response) => { //*84
     res.json({
         ok: true,
         usuario,
-        token
+        tokenrenovado: token
     }
   )
 }
+// *********************************************************
+/* Exporting the functions `crearUsuario`, `login`, and `renewToken` so that they can be used in other
+files. */
 
 
-/* Exporting the function `crearUsuario` so that it can be used in other files. */
 module.exports = {
     crearUsuario,
     login,
